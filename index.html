@@ -81,12 +81,15 @@
     <div id="question" class="question"></div>
     <div id="options" class="options"></div>
     <div id="feedback" class="result"></div>
-    <button id="next-btn" class="next" onclick="nextQuestion()" style="display:none;">下一題 ▶️</button>
+    <button id="next-btn" class="next" onclick="nextQuestion()" style="display:none;">
+      下一題 ▶️
+    </button>
   </div>
 
   <div class="card" id="final-score" style="display:none; text-align:center;"></div>
 
   <script>
+    // 題庫資料
     const quizData = [
       { q:"「台湾人」的日語怎麼說？",
         opts:["たいわんじん","にほんじん","ちゅうごくじん","かんこくじん"],
@@ -137,48 +140,52 @@
 
     let current = 0, score = 0, femaleVoice = null;
 
-    // 取得可用語音並選女性日語
-    window.speechSynthesis.onvoiceschanged = () => {
-      const voices = speechSynthesis.getVoices();
-      femaleVoice = voices
-        .filter(v => v.lang === 'ja-JP')
-        .find(v => /female/i.test(v.name)) 
-        || voices.find(v => v.lang === 'ja-JP');
-    };
+    // 取得並設定日語女性聲源
+    function setFemaleVoice() {
+      const voices = speechSynthesis.getVoices().filter(v => v.lang === 'ja-JP');
+      // 優先找「Google 日本語」
+      femaleVoice = voices.find(v => /Google 日本語/i.test(v.name))
+        // 再找排序第2筆（通常是女性）
+        || voices[1]
+        // 最後以第1筆為保險
+        || voices[0];
+    }
+
+    // 語音列表載入時、以及頁面載入時都呼叫
+    speechSynthesis.onvoiceschanged = setFemaleVoice;
+
+    function speakText(text) {
+      if (!speechSynthesis) return;
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'ja-JP';
+      if (femaleVoice) utter.voice = femaleVoice;
+      speechSynthesis.speak(utter);
+    }
 
     function loadQuestion() {
       const data = quizData[current];
       document.getElementById('question').innerText =
         `題目 ${current+1}：${data.q}`;
-      document.getElementById('options').innerHTML = 
+      document.getElementById('options').innerHTML =
         data.opts.map((opt, idx) => `
           <label>
             <div>
-              <input 
-                type="radio" 
-                name="option" 
-                value="${idx}" 
+              <input
+                type="radio"
+                name="option"
+                value="${idx}"
                 onclick="checkAnswer(${idx})"
-              >
-              ${opt}
+              > ${opt}
             </div>
-            <button 
-              type="button" 
-              class="voice-btn" 
+            <button
+              type="button"
+              class="voice-btn"
               onclick="speakText('${opt.replace(/'/g,"\\'")}'); event.stopPropagation();"
             >🔊</button>
           </label>
         `).join('');
       document.getElementById('feedback').innerText = '';
       document.getElementById('next-btn').style.display = 'none';
-    }
-
-    function speakText(text) {
-      if (!window.speechSynthesis) return;
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = 'ja-JP';
-      if (femaleVoice) utter.voice = femaleVoice;
-      speechSynthesis.speak(utter);
     }
 
     function checkAnswer(selected) {
@@ -191,9 +198,7 @@
         fb.innerHTML = `<span class="wrong">✘ 錯誤</span>：${data.exp}`;
       }
       document.getElementById('next-btn').style.display = 'inline-block';
-      document
-        .querySelectorAll('input[name="option"]')
-        .forEach(i => i.disabled = true);
+      document.querySelectorAll('input[name="option"]').forEach(i => i.disabled = true);
     }
 
     function nextQuestion() {
@@ -223,11 +228,9 @@
     }
 
     window.onload = () => {
+      // 先行撈語音清單
+      setFemaleVoice();
       loadQuestion();
-      // 觸發 onvoiceschanged 以載入語音列表
-      if (speechSynthesis.getVoices().length) {
-        window.speechSynthesis.onvoiceschanged();
-      }
     };
   </script>
 </body>
