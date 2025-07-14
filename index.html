@@ -2,9 +2,12 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>第1課：日語測驗（語音按鈕版）</title>
+  <title>第1課：日語測驗（女性語音按鈕版）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap"
+    rel="stylesheet"
+  >
   <style>
     body {
       font-family: 'Noto Sans JP', sans-serif;
@@ -55,7 +58,7 @@
       font-weight: bold;
     }
     .correct { color: green; }
-    .wrong { color: red; }
+    .wrong   { color: red;   }
     button.next {
       margin-top: 20px;
       padding: 10px 15px;
@@ -85,59 +88,112 @@
 
   <script>
     const quizData = [
-      { q:"「台湾人」的日語怎麼說？", opts:["たいわんじん","にほんじん","ちゅうごくじん","かんこくじん"], ans:0, exp:"「たいわんじん」，じん表示國籍。" },
-      { q:"「學生」的日語是什麼？", opts:["せんせい","がくせい","しゃいん","りゅうがくせい"], ans:1, exp:"「がくせい」表示學生。" },
-      { q:"「李小姐是台灣人」的日語是？", opts:["李さんは 日本人です。","李さんは 台湾人です。","李さんは 学生です。","李さんは 会社員です。"], ans:1, exp:"正確句子是「李さんは 台湾人です。」" },
-      { q:"「先生」的日語是什麼？", opts:["がくせい","せんせい","しゃいん","かちょう"], ans:1, exp:"老師是「せんせい」" },
-      { q:"「公司職員」的日語是什麼？", opts:["しゃいん","かいしゃいん","てんいん","りゅうがくせい"], ans:1, exp:"「かいしゃいん」表示公司職員。" },
-      { q:"「森先生是學生嗎？」的日語是？", opts:["森さんは 学生ですか。","森さんは 会社員ですか。","森さんは 台湾人ですか。","森さんは 日本人ですか。"], ans:0, exp:"疑問句：「～ですか」結構" },
-      { q:"「不是」的日語是什麼？", opts:["はい","いいえ","ちがいます","そうです"], ans:2, exp:"「ちがいます」表示否定。" },
-      { q:"「初次見面」的日語是什麼？", opts:["はじめまして","どうぞ","よろしく","すみません"], ans:0, exp:"自我介紹時說「はじめまして」" },
-      { q:"「請多關照」的日語是什麼？", opts:["どうぞよろしくお願いします","はじめまして","すみません","ちがいます"], ans:0, exp:"結尾常用「どうぞよろしくお願いします」" },
-      { q:"「李小姐是JC企劃公司的職員」的日語是？", opts:["李さんは JC企画の 学生です。","李さんは JC企画の 社員です。","李さんは JC企画の 課長です。","李さんは JC企画の 教授です。"], ans:1, exp:"「社員」表示公司職員。" },
-      { q:"「那個人」的日語是什麼？", opts:["あなた","わたし","あの人","せんせい"], ans:2, exp:"「あの人」表示遠處第三人" },
-      { q:"「金小姐是中國人嗎？」的日語是？", opts:["金さんは 日本人ですか。","金さんは 中国人ですか。","金さんは 台湾人ですか。","金さんは 学生ですか。"], ans:1, exp:"疑問句：「中国人ですか」" },
-      { q:"「對不起」的日語是什麼？", opts:["すみません","どうぞ","よろしく","ちがいます"], ans:0, exp:"「すみません」是道歉與請問用語。" },
-      { q:"「我是台灣人」的日語是？", opts:["わたしは 日本人です。","わたしは 台湾人です。","わたしは 学生です。","わたしは 会社員です。"], ans:1, exp:"「わたしは 台湾人です。」" },
-      { q:"「森先生不是學生」的日語是？", opts:["森さんは 学生です。","森さんは 学生では ありません。","森さんは 学生では ありませんか。","森さんは 学生ですか。"], ans:1, exp:"否定句型：「～ではありません」" }
+      { q:"「台湾人」的日語怎麼說？",
+        opts:["たいわんじん","にほんじん","ちゅうごくじん","かんこくじん"],
+        ans:0, exp:"「たいわんじん」，じん表示國籍。" },
+      { q:"「學生」的日語是什麼？",
+        opts:["せんせい","がくせい","しゃいん","りゅうがくせい"],
+        ans:1, exp:"「がくせい」表示學生。" },
+      { q:"「李小姐是台灣人」的日語是？",
+        opts:["李さんは 日本人です。","李さんは 台湾人です。","李さんは 学生です。","李さんは 会社員です。"],
+        ans:1, exp:"正確句子是「李さんは 台湾人です。」" },
+      { q:"「先生」的日語是什麼？",
+        opts:["がくせい","せんせい","しゃいん","かちょう"],
+        ans:1, exp:"老師是「せんせい」" },
+      { q:"「公司職員」的日語是什麼？",
+        opts:["しゃいん","かいしゃいん","てんいん","りゅうがくせい"],
+        ans:1, exp:"「かいしゃいん」表示公司職員。" },
+      { q:"「森先生是學生嗎？」的日語是？",
+        opts:["森さんは 学生ですか。","森さんは 会社員ですか。","森さんは 台湾人ですか。","森さんは 日本人ですか。"],
+        ans:0, exp:"疑問句：「～ですか」結構" },
+      { q:"「不是」的日語是什麼？",
+        opts:["はい","いいえ","ちがいます","そうです"],
+        ans:2, exp:"「ちがいます」表示否定。" },
+      { q:"「初次見面」的日語是什麼？",
+        opts:["はじめまして","どうぞ","よろしく","すみません"],
+        ans:0, exp:"自我介紹時說「はじめまして」" },
+      { q:"「請多關照」的日語是什麼？",
+        opts:["どうぞよろしくお願いします","はじめまして","すみません","ちがいます"],
+        ans:0, exp:"結尾常用「どうぞよろしくお願いします」" },
+      { q:"「李小姐是JC企劃公司的職員」的日語是？",
+        opts:["李さんは JC企画の 学生です。","李さんは JC企画の 社員です。","李さんは JC企画の 課長です。","李さんは JC企画の 教授です。"],
+        ans:1, exp:"「社員」表示公司職員。" },
+      { q:"「那個人」的日語是什麼？",
+        opts:["あなた","わたし","あの人","せんせい"],
+        ans:2, exp:"「あの人」表示遠處第三人" },
+      { q:"「金小姐是中國人嗎？」的日語是？",
+        opts:["金さんは 日本人ですか。","金さんは 中国人ですか。","金さんは 台湾人ですか。","金さんは 学生ですか。"],
+        ans:1, exp:"疑問句：「中国人ですか」" },
+      { q:"「對不起」的日語是什麼？",
+        opts:["すみません","どうぞ","よろしく","ちがいます"],
+        ans:0, exp:"「すみません」是道歉與請問用語。" },
+      { q:"「我是台灣人」的日語是？",
+        opts:["わたしは 日本人です。","わたしは 台湾人です。","わたしは 学生です。","わたしは 会社員です。"],
+        ans:1, exp:"「わたしは 台湾人です。」" },
+      { q:"「森先生不是學生」的日語是？",
+        opts:["森さんは 学生です。","森さんは 学生では ありません。","森さんは 学生では ありませんか。","森さんは 学生ですか。"],
+        ans:1, exp:"否定句型：「～ではありません」" }
     ];
 
-    let current = 0, score = 0;
+    let current = 0, score = 0, femaleVoice = null;
+
+    // 取得可用語音並選女性日語
+    window.speechSynthesis.onvoiceschanged = () => {
+      const voices = speechSynthesis.getVoices();
+      femaleVoice = voices
+        .filter(v => v.lang === 'ja-JP')
+        .find(v => /female/i.test(v.name)) 
+        || voices.find(v => v.lang === 'ja-JP');
+    };
 
     function loadQuestion() {
       const data = quizData[current];
-      document.getElementById("question").innerText = `題目 ${current+1}：${data.q}`;
-      document.getElementById("options").innerHTML = data.opts.map((opt, idx) => `
-        <label>
-          <div>
-            <input type="radio" name="option" value="${idx}" onclick="checkAnswer(${idx})">
-            ${opt}
-          </div>
-          <button type="button" class="voice-btn" onclick="speakText('${opt.replace(/'/g,"\\'")}');event.stopPropagation();">🔊</button>
-        </label>
-      `).join("");
-      document.getElementById("feedback").innerText = "";
-      document.getElementById("next-btn").style.display = "none";
+      document.getElementById('question').innerText =
+        `題目 ${current+1}：${data.q}`;
+      document.getElementById('options').innerHTML = 
+        data.opts.map((opt, idx) => `
+          <label>
+            <div>
+              <input 
+                type="radio" 
+                name="option" 
+                value="${idx}" 
+                onclick="checkAnswer(${idx})"
+              >
+              ${opt}
+            </div>
+            <button 
+              type="button" 
+              class="voice-btn" 
+              onclick="speakText('${opt.replace(/'/g,"\\'")}'); event.stopPropagation();"
+            >🔊</button>
+          </label>
+        `).join('');
+      document.getElementById('feedback').innerText = '';
+      document.getElementById('next-btn').style.display = 'none';
     }
 
     function speakText(text) {
       if (!window.speechSynthesis) return;
       const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = "ja-JP";
+      utter.lang = 'ja-JP';
+      if (femaleVoice) utter.voice = femaleVoice;
       speechSynthesis.speak(utter);
     }
 
     function checkAnswer(selected) {
       const data = quizData[current];
-      const fb = document.getElementById("feedback");
+      const fb = document.getElementById('feedback');
       if (selected === data.ans) {
         score++;
         fb.innerHTML = `<span class="correct">✔ 正確</span>：${data.exp}`;
       } else {
         fb.innerHTML = `<span class="wrong">✘ 錯誤</span>：${data.exp}`;
       }
-      document.getElementById("next-btn").style.display = "inline-block";
-      document.querySelectorAll('input[name="option"]').forEach(i => i.disabled = true);
+      document.getElementById('next-btn').style.display = 'inline-block';
+      document
+        .querySelectorAll('input[name="option"]')
+        .forEach(i => i.disabled = true);
     }
 
     function nextQuestion() {
@@ -150,9 +206,9 @@
     }
 
     function finishQuiz() {
-      document.getElementById("quiz-box").style.display = "none";
-      const box = document.getElementById("final-score");
-      box.style.display = "block";
+      document.getElementById('quiz-box').style.display = 'none';
+      const box = document.getElementById('final-score');
+      box.style.display = 'block';
       box.innerHTML = `
         <h2>🎯 測驗完成！你答對了 ${score} / ${quizData.length} 題</h2>
         <button class="next" onclick="restartQuiz()">重新測驗 🔄</button>
@@ -160,14 +216,19 @@
     }
 
     function restartQuiz() {
-      current = 0;
-      score = 0;
-      document.getElementById("final-score").style.display = "none";
-      document.getElementById("quiz-box").style.display = "block";
+      current = 0; score = 0;
+      document.getElementById('final-score').style.display = 'none';
+      document.getElementById('quiz-box').style.display = 'block';
       loadQuestion();
     }
 
-    window.onload = loadQuestion;
+    window.onload = () => {
+      loadQuestion();
+      // 觸發 onvoiceschanged 以載入語音列表
+      if (speechSynthesis.getVoices().length) {
+        window.speechSynthesis.onvoiceschanged();
+      }
+    };
   </script>
 </body>
 </html>
