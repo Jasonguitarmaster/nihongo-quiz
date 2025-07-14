@@ -6,56 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Noto Sans JP', sans-serif;
-      padding: 20px;
-      background: #f2f2f2;
-    }
-    h1 {
-      color: #2c3e50;
-    }
-    img.cover {
-      width: 100%;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
-    .question {
-      background: #fff;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .options label {
-      display: block;
-      margin: 5px 0;
-    }
-    .result {
-      margin-top: 10px;
-      font-weight: bold;
-    }
+    body { font-family: 'Noto Sans JP', sans-serif; padding: 20px; background: #f2f2f2; }
+    h1 { color: #2c3e50; }
+    img.cover { width: 100%; border-radius: 8px; margin-bottom: 20px; }
+    .question { background: #fff; padding: 15px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .options label { display: block; margin: 5px 0; }
+    .result { margin-top: 10px; font-weight: bold; }
     .correct { color: green; }
     .wrong { color: red; }
-    #score {
-      margin-top: 30px;
-      font-size: 1.2em;
-    }
-    button {
-      padding: 10px 15px;
-      font-size: 16px;
-      background: #3498db;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #2980b9;
-    }
+    #score { margin-top: 30px; font-size: 1.2em; }
+    button { padding: 10px 15px; font-size: 16px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #2980b9; }
   </style>
 </head>
 <body>
-  <!-- 封面圖片（需將 header.jpg 上傳至 repo 根目錄） -->
   <img src="header.jpg" alt="日語測驗封面" class="cover">
   <h1>📝 第1課：李さんは台湾人です — 日語測驗</h1>
   <div id="quiz-container"></div>
@@ -64,21 +28,21 @@
 
   <script>
     const quizData = [
-      { question: "「台湾人」的日語怎麼說？", options: ["たいわんじん", "にほんじん", "ちゅうごくじん", "かんこくじん"], answer: [0], explanation: "「たいわんじん」，じん表示國籍。" },
-      { question: "「學生」的日語是什麼？", options: ["せんせい", "がくせい", "しゃいん", "りゅうがくせい"], answer: [1], explanation: "「がくせい」表示學生。" },
-      { question: "「李小姐是台灣人」的日語是？", options: ["李さんは 日本人です。","李さんは 台湾人です。","李さんは 学生です。","李さんは 会社員です。"], answer: [1], explanation: "正確句子是「李さんは 台湾人です。」" },
-      { question: "「先生」的日語是什麼？", options: ["がくせい", "せんせい", "しゃいん", "かちょう"], answer: [1], explanation: "老師是「せんせい」" },
-      { question: "「公司職員」的日語是什麼？", options: ["しゃいん","かいしゃいん","てんいん","りゅうがくせい"], answer: [1], explanation: "「かいしゃいん」表示公司職員。" },
-      { question: "「森先生是學生嗎？」的日語是？", options: ["森さんは 学生ですか。","森さんは 会社員ですか。","森さんは 台湾人ですか。","森さんは 日本人ですか。"], answer: [0], explanation: "疑問句：「～ですか」結構" },
-      { question: "「不是」的日語是什麼？", options: ["はい","いいえ","ちがいます","そうです"], answer: [2], explanation: "「ちがいます」表示否定。" },
-      { question: "「初次見面」的日語是什麼？", options: ["はじめまして","どうぞ","よろしく","すみません"], answer: [0], explanation: "自我介紹時說「はじめまして」" },
-      { question: "「請多關照」的日語是什麼？", options: ["どうぞよろしくお願いします","はじめまして","すみません","ちがいます"], answer: [0], explanation: "結尾常用「どうぞよろしくお願いします」" },
-      { question: "「李小姐是JC企劃公司的職員」的日語是？", options: ["李さんは JC企画の 学生です。","李さんは JC企画の 社員です。","李さんは JC企画の 課長です。","李さんは JC企画の 教授です。"], answer: [1], explanation: "「社員」表示公司職員。" },
-      { question: "「那個人」的日語是什麼？", options: ["あなた","わたし","あの人","せんせい"], answer: [2], explanation: "「あの人」表示遠處第三人" },
-      { question: "「金小姐是中國人嗎？」的日語是？", options: ["金さんは 日本人ですか。","金さんは 中国人ですか。","金さんは 台湾人ですか。","金さんは 学生ですか。"], answer: [1], explanation: "疑問句：「中国人ですか」" },
-      { question: "「對不起」的日語是什麼？", options: ["すみません","どうぞ","よろしく","ちがいます"], answer: [0], explanation: "「すみません」是道歉與請問用語。" },
-      { question: "「我是台灣人」的日語是？", options: ["わたしは 日本人です。","わたしは 台湾人です。","わたしは 学生です。","わたしは 会社員です。"], answer: [1], explanation: "「わたしは 台湾人です。」" },
-      { question: "「森先生不是學生」的日語是？", options: ["森さんは 学生です。","森さんは 学生では ありません。","森さんは 学生では ありませんか。","森さんは 学生ですか。"], answer: [1], explanation: "否定句型：「～ではありません」" }
+      { question: "「台湾人」的日語怎麼說？", options: ["たいわんじん", "にほんじん", "ちゅうごくじん", "かんこくじん"], answer: 0, explanation: "「たいわんじん」，じん表示國籍。" },
+      { question: "「學生」的日語是什麼？", options: ["せんせい", "がくせい", "しゃいん", "りゅうがくせい"], answer: 1, explanation: "「がくせい」表示學生。" },
+      { question: "「李小姐是台灣人」的日語是？", options: ["李さんは 日本人です。", "李さんは 台湾人です。", "李さんは 学生です。", "李さんは 会社員です。"], answer: 1, explanation: "正確句子是「李さんは 台湾人です。」" },
+      { question: "「先生」的日語是什麼？", options: ["がくせい", "せんせい", "しゃいん", "かちょう"], answer: 1, explanation: "老師是「せんせい」" },
+      { question: "「公司職員」的日語是什麼？", options: ["しゃいん", "かいしゃいん", "てんいん", "りゅうがくせい"], answer: 1, explanation: "「かいしゃいん」表示公司職員。" },
+      { question: "「森先生是學生嗎？」的日語是？", options: ["森さんは 学生ですか。", "森さんは 会社員ですか。", "森さんは 台湾人ですか。", "森さんは 日本人ですか。"], answer: 0, explanation: "疑問句：「～ですか」結構" },
+      { question: "「不是」的日語是什麼？", options: ["はい", "いいえ", "ちがいます", "そうです"], answer: 2, explanation: "「ちがいます」表示否定。" },
+      { question: "「初次見面」的日語是什麼？", options: ["はじめまして", "どうぞ", "よろしく", "すみません"], answer: 0, explanation: "自我介紹時說「はじめまして」" },
+      { question: "「請多關照」的日語是什麼？", options: ["どうぞよろしくお願いします", "はじめまして", "すみません", "ちがいます"], answer: 0, explanation: "結尾常用「どうぞよろしくお願いします」" },
+      { question: "「李小姐是JC企劃公司的職員」的日語是？", options: ["李さんは JC企画の 学生です。", "李さんは JC企画の 社員です。", "李さんは JC企画の 課長です。", "李さんは JC企画の 教授です。"], answer: 1, explanation: "「社員」表示公司職員。" },
+      { question: "「那個人」的日語是什麼？", options: ["あなた", "わたし", "あの人", "せんせい"], answer: 2, explanation: "「あの人」表示遠處第三人" },
+      { question: "「金小姐是中國人嗎？」的日語是？", options: ["金さんは 日本人ですか。", "金さんは 中国人ですか。", "金さんは 台湾人ですか。", "金さんは 学生ですか。"], answer: 1, explanation: "疑問句：「中国人ですか」" },
+      { question: "「對不起」的日語是什麼？", options: ["すみません", "どうぞ", "よろしく", "ちがいます"], answer: 0, explanation: "「すみません」是道歉與請問用語。" },
+      { question: "「我是台灣人」的日語是？", options: ["わたしは 日本人です。", "わたしは 台湾人です。", "わたしは 学生です。", "わたしは 会社員です。"], answer: 1, explanation: "「わたしは 台湾人です。」" },
+      { question: "「森先生不是學生」的日語是？", options: ["森さんは 学生です。", "森さんは 学生では ありません。", "森さんは 学生では ありませんか。", "森さんは 学生ですか。"], answer: 1, explanation: "否定句型：「～ではありません」" }
     ];
 
     function loadQuiz() {
@@ -102,7 +66,7 @@
         const resultDiv = document.getElementById(`result${i}`);
         if (selected) {
           const value = parseInt(selected.value);
-          if (value === q.answer[0]) {
+          if (value === q.answer) {
             score++;
             resultDiv.innerHTML = `<span class="correct">✔ 正確</span>：${q.explanation}`;
           } else {
