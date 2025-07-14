@@ -23,43 +23,98 @@
   <div id="score"></div>
 
   <script>
-    const quizData = [/* 👉 這裡將插入15題題庫資料 */];
-
-    function loadQuiz() {
-      const container = document.getElementById('quiz-container');
-      quizData.forEach((q, i) => {
-        const div = document.createElement('div');
-        div.className = 'question';
-        div.innerHTML = `<p><strong>題目 ${i + 1}：</strong> ${q.question}</p>`;
-        const optionsHtml = q.options.map((opt, idx) => `
-          <label><input type="radio" name="q${i}" value="${idx}"> ${opt}</label>
-        `).join('');
-        div.innerHTML += `<div class="options">${optionsHtml}</div><div id="result${i}" class="result"></div>`;
-        container.appendChild(div);
-      });
-    }
-
-    function submitQuiz() {
-      let score = 0;
-      quizData.forEach((q, i) => {
-        const selected = document.querySelector(`input[name="q${i}"]:checked`);
-        const resultDiv = document.getElementById(`result${i}`);
-        if (selected) {
-          const value = parseInt(selected.value);
-          if (value === q.answer[0]) {
-            score++;
-            resultDiv.innerHTML = `<span class="correct">✔ 正確</span>：${q.explanation}`;
-          } else {
-            resultDiv.innerHTML = `<span class="wrong">✘ 錯誤</span>：${q.explanation}`;
-          }
-        } else {
-          resultDiv.innerHTML = `<span class="wrong">✘ 未作答</span>：${q.explanation}`;
-        }
-      });
-      document.getElementById('score').innerHTML = `<h2>🎯 成績：${score} / ${quizData.length}</h2>`;
-    }
-
-    window.onload = loadQuiz;
+    const quizData = [
+      {
+        question: "「台湾人」的日語怎麼說？",
+        options: ["たいわんじん", "にほんじん", "ちゅうごくじん", "かんこくじん"],
+        answer: [0],
+        explanation: "「台湾人」的日語是「たいわんじん」，其中「じん」表示國籍。"
+      },
+      {
+        question: "「學生」的日語是什麼？",
+        options: ["せんせい", "がくせい", "しゃいん", "りゅうがくせい"],
+        answer: [1],
+        explanation: "「學生」的日語是「がくせい」，用於指一般的學生。"
+      },
+      {
+        question: "「李小姐是台灣人」的日語正確表達是什麼？",
+        options: ["李さんは 日本人です。","李さんは 台湾人です。","李さんは 学生です。","李さんは 会社員です。"],
+        answer: [1],
+        explanation: "正確句子是「李さんは 台湾人です。」"
+      },
+      {
+        question: "「先生」的日語是什麼？",
+        options: ["がくせい", "せんせい", "しゃいん", "かちょう"],
+        answer: [1],
+        explanation: "「先生」是「せんせい」，指老師或教授。"
+      },
+      {
+        question: "「公司職員」的日語是什麼？",
+        options: ["しゃいん","かいしゃいん","てんいん","りゅうがくせい"],
+        answer: [1],
+        explanation: "「公司職員」的日語是「かいしゃいん」。"
+      },
+      {
+        question: "「森先生是學生嗎？」的日語正確表達是什麼？",
+        options: ["森さんは 学生ですか。","森さんは 会社員ですか。","森さんは 台湾人ですか。","森さんは 日本人ですか。"],
+        answer: [0],
+        explanation: "疑問句形式：「森さんは 学生ですか。」"
+      },
+      {
+        question: "「不是」的日語是什麼？",
+        options: ["はい","いいえ","ちがいます","そうです"],
+        answer: [2],
+        explanation: "「ちがいます」是「不是」的意思。"
+      },
+      {
+        question: "「初次見面」的日語是什麼？",
+        options: ["はじめまして","どうぞ","よろしく","すみません"],
+        answer: [0],
+        explanation: "「初次見面」用「はじめまして」表示。"
+      },
+      {
+        question: "「請多關照」的日語是什麼？",
+        options: ["どうぞよろしくお願いします","はじめまして","すみません","ちがいます"],
+        answer: [0],
+        explanation: "自我介紹後常說「どうぞよろしくお願いします」。"
+      },
+      {
+        question: "「李小姐是JC企劃公司的職員」的日語是？",
+        options: ["李さんは JC企画の 学生です。","李さんは JC企画の 社員です。","李さんは JC企画の 課長です。","李さんは JC企画の 教授です。"],
+        answer: [1],
+        explanation: "「社員」表示隸屬公司的人：「李さんは JC企画の 社員です。」"
+      },
+      {
+        question: "「那個人」的日語是什麼？",
+        options: ["あなた","わたし","あの人","せんせい"],
+        answer: [2],
+        explanation: "「あの人」指遠處的第三人。"
+      },
+      {
+        question: "「金小姐是中國人嗎？」的正確日語是？",
+        options: ["金さんは 日本人ですか。","金さんは 中国人ですか。","金さんは 台湾人ですか。","金さんは 学生ですか。"],
+        answer: [1],
+        explanation: "「中國人嗎？」是「中国人ですか」。"
+      },
+      {
+        question: "「對不起」的日語是什麼？",
+        options: ["すみません","どうぞ","よろしく","ちがいます"],
+        answer: [0],
+        explanation: "常見禮貌語：「すみません」表示抱歉或請問。"
+      },
+      {
+        question: "「我是台灣人」的日語是？",
+        options: ["わたしは 日本人です。","わたしは 台湾人です。","わたしは 学生です。","わたしは 会社員です。"],
+        answer: [1],
+        explanation: "「わたしは 台湾人です。」表示我是台灣人。"
+      },
+      {
+        question: "「森先生不是學生」的日語是？",
+        options: ["森さんは 学生です。","森さんは 学生では ありません。","森さんは 学生では ありませんか。","森さんは 学生ですか。"],
+        answer: [1],
+        explanation: "否定句型為：「学生では ありません」。"
+      }
+    ];
   </script>
 </body>
 </html>
