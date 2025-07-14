@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>第1課：日語測驗</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f2f2f2; }
+    h1 { color: #2c3e50; }
+    .question { background: #fff; padding: 15px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .options label { display: block; margin: 5px 0; }
+    .result { margin-top: 10px; font-weight: bold; }
+    .correct { color: green; }
+    .wrong { color: red; }
+    #score { margin-top: 30px; font-size: 1.2em; }
+    button { padding: 10px 15px; font-size: 16px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #2980b9; }
+  </style>
+</head>
+<body>
+  <h1>📝 第1課：李さんは台湾人です — 日語測驗</h1>
+  <div id="quiz-container"></div>
+  <button onclick="submitQuiz()">送出測驗</button>
+  <div id="score"></div>
+
+  <script>
+    const quizData = [/* 👉 這裡將插入15題題庫資料 */];
+
+    function loadQuiz() {
+      const container = document.getElementById('quiz-container');
+      quizData.forEach((q, i) => {
+        const div = document.createElement('div');
+        div.className = 'question';
+        div.innerHTML = `<p><strong>題目 ${i + 1}：</strong> ${q.question}</p>`;
+        const optionsHtml = q.options.map((opt, idx) => `
+          <label><input type="radio" name="q${i}" value="${idx}"> ${opt}</label>
+        `).join('');
+        div.innerHTML += `<div class="options">${optionsHtml}</div><div id="result${i}" class="result"></div>`;
+        container.appendChild(div);
+      });
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      quizData.forEach((q, i) => {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const resultDiv = document.getElementById(`result${i}`);
+        if (selected) {
+          const value = parseInt(selected.value);
+          if (value === q.answer[0]) {
+            score++;
+            resultDiv.innerHTML = `<span class="correct">✔ 正確</span>：${q.explanation}`;
+          } else {
+            resultDiv.innerHTML = `<span class="wrong">✘ 錯誤</span>：${q.explanation}`;
+          }
+        } else {
+          resultDiv.innerHTML = `<span class="wrong">✘ 未作答</span>：${q.explanation}`;
+        }
+      });
+      document.getElementById('score').innerHTML = `<h2>🎯 成績：${score} / ${quizData.length}</h2>`;
+    }
+
+    window.onload = loadQuiz;
+  </script>
+</body>
+</html>
