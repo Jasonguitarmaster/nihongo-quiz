@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>第1課：日語測驗</title>
+  <title>第1課：李さんは台湾人です — 日語測驗</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
   <style>
@@ -36,12 +36,8 @@
       margin-top: 15px;
       font-weight: bold;
     }
-    .correct {
-      color: green;
-    }
-    .wrong {
-      color: red;
-    }
+    .correct { color: green; }
+    .wrong { color: red; }
     button {
       margin-top: 20px;
       padding: 10px 15px;
@@ -58,7 +54,7 @@
   </style>
 </head>
 <body>
-  <h1>📝 第1課：李さんは台湾人です</h1>
+  <h1>📝 第1課：李さんは台湾人です — 日語測驗</h1>
   <div class="card" id="quiz-box">
     <div id="question" class="question"></div>
     <div id="options" class="options"></div>
@@ -72,18 +68,7 @@
       { question: "「台湾人」的日語怎麼說？", options: ["たいわんじん", "にほんじん", "ちゅうごくじん", "かんこくじん"], answer: 0, explanation: "「たいわんじん」，じん表示國籍。" },
       { question: "「學生」的日語是什麼？", options: ["せんせい", "がくせい", "しゃいん", "りゅうがくせい"], answer: 1, explanation: "「がくせい」表示學生。" },
       { question: "「李小姐是台灣人」的日語是？", options: ["李さんは 日本人です。", "李さんは 台湾人です。", "李さんは 学生です。", "李さんは 会社員です。"], answer: 1, explanation: "正確句子是「李さんは 台湾人です。」" },
-      { question: "「先生」的日語是什麼？", options: ["がくせい", "せんせい", "しゃいん", "かちょう"], answer: 1, explanation: "老師是「せんせい」" },
-      { question: "「公司職員」的日語是什麼？", options: ["しゃいん", "かいしゃいん", "てんいん", "りゅうがくせい"], answer: 1, explanation: "「かいしゃいん」表示公司職員。" },
-      { question: "「森先生是學生嗎？」的日語是？", options: ["森さんは 学生ですか。", "森さんは 会社員ですか。", "森さんは 台湾人ですか。", "森さんは 日本人ですか。"], answer: 0, explanation: "疑問句：「～ですか」結構" },
-      { question: "「不是」的日語是什麼？", options: ["はい", "いいえ", "ちがいます", "そうです"], answer: 2, explanation: "「ちがいます」表示否定。" },
-      { question: "「初次見面」的日語是什麼？", options: ["はじめまして", "どうぞ", "よろしく", "すみません"], answer: 0, explanation: "自我介紹時說「はじめまして」" },
-      { question: "「請多關照」的日語是什麼？", options: ["どうぞよろしくお願いします", "はじめまして", "すみません", "ちがいます"], answer: 0, explanation: "結尾常用「どうぞよろしくお願いします」" },
-      { question: "「李小姐是JC企劃公司的職員」的日語是？", options: ["李さんは JC企画の 学生です。", "李さんは JC企画の 社員です。", "李さんは JC企画の 課長です。", "李さんは JC企画の 教授です。"], answer: 1, explanation: "「社員」表示公司職員。" },
-      { question: "「那個人」的日語是什麼？", options: ["あなた", "わたし", "あの人", "せんせい"], answer: 2, explanation: "「あの人」表示遠處第三人" },
-      { question: "「金小姐是中國人嗎？」的日語是？", options: ["金さんは 日本人ですか。", "金さんは 中国人ですか。", "金さんは 台湾人ですか。", "金さんは 学生ですか。"], answer: 1, explanation: "疑問句：「中国人ですか」" },
-      { question: "「對不起」的日語是什麼？", options: ["すみません", "どうぞ", "よろしく", "ちがいます"], answer: 0, explanation: "「すみません」是道歉與請問用語。" },
-      { question: "「我是台灣人」的日語是？", options: ["わたしは 日本人です。", "わたしは 台湾人です。", "わたしは 学生です。", "わたしは 会社員です。"], answer: 1, explanation: "「わたしは 台湾人です。」" },
-      { question: "「森先生不是學生」的日語是？", options: ["森さんは 学生です。", "森さんは 学生では ありません。", "森さんは 学生では ありませんか。", "森さんは 学生ですか。"], answer: 1, explanation: "否定句型：「～ではありません」" }
+      // 如需添加更多題目，請繼續在這裡擴充 quizData 陣列
     ];
 
     let current = 0;
@@ -117,7 +102,26 @@
       if (current < quizData.length) {
         loadQuestion();
       } else {
-        document.getElementById("quiz-box").style.display = "none";
-        document.getElementById("final-score").style.display = "block";
-        document.getElementById("final-score").innerHTML =
-          `<h2>🎯
+        showFinalScore();
+      }
+    }
+
+    function showFinalScore() {
+      document.getElementById("quiz-box").style.display = "none";
+      document.getElementById("final-score").style.display = "block";
+      document.getElementById("final-score").innerHTML =
+        `<h2>🎯 測驗完成！你答對了 ${score} / ${quizData.length} 題</h2><button onclick="restart()">重新測驗 🔄</button>`;
+    }
+
+    function restart() {
+      current = 0;
+      score = 0;
+      document.getElementById("final-score").style.display = "none";
+      document.getElementById("quiz-box").style.display = "block";
+      loadQuestion();
+    }
+
+    window.onload = loadQuestion;
+  </script>
+</body>
+</html>
