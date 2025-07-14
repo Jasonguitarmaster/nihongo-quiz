@@ -1,120 +1,18 @@
-<!DOCTYPE html>
-<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <title>第1課：日語測驗</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
   <style>
-    body { font-family: sans-serif; padding: 20px; background: #f2f2f2; }
-    h1 { color: #2c3e50; }
-    .question { background: #fff; padding: 15px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    .options label { display: block; margin: 5px 0; }
-    .result { margin-top: 10px; font-weight: bold; }
-    .correct { color: green; }
-    .wrong { color: red; }
-    #score { margin-top: 30px; font-size: 1.2em; }
-    button { padding: 10px 15px; font-size: 16px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    button:hover { background: #2980b9; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      padding: 20px;
+      background: #f2f2f2;
+    }
+    /* ...其他樣式... */
   </style>
 </head>
 <body>
+  <img src="https://raw.githubusercontent.com/yourusername/nihongo-quiz/main/header.jpg" alt="日語測驗封面" style="width:100%; border-radius:8px; margin-bottom:20px;">
   <h1>📝 第1課：李さんは台湾人です — 日語測驗</h1>
-  <div id="quiz-container"></div>
-  <button onclick="submitQuiz()">送出測驗</button>
-  <div id="score"></div>
-
-  <script>
-    const quizData = [
-      {
-        question: "「台湾人」的日語怎麼說？",
-        options: ["たいわんじん", "にほんじん", "ちゅうごくじん", "かんこくじん"],
-        answer: [0],
-        explanation: "「台湾人」的日語是「たいわんじん」，其中「じん」表示國籍。"
-      },
-      {
-        question: "「學生」的日語是什麼？",
-        options: ["せんせい", "がくせい", "しゃいん", "りゅうがくせい"],
-        answer: [1],
-        explanation: "「學生」的日語是「がくせい」，用於指一般的學生。"
-      },
-      {
-        question: "「李小姐是台灣人」的日語正確表達是什麼？",
-        options: ["李さんは 日本人です。","李さんは 台湾人です。","李さんは 学生です。","李さんは 会社員です。"],
-        answer: [1],
-        explanation: "正確句子是「李さんは 台湾人です。」"
-      },
-      {
-        question: "「先生」的日語是什麼？",
-        options: ["がくせい", "せんせい", "しゃいん", "かちょう"],
-        answer: [1],
-        explanation: "「先生」是「せんせい」，指老師或教授。"
-      },
-      {
-        question: "「公司職員」的日語是什麼？",
-        options: ["しゃいん","かいしゃいん","てんいん","りゅうがくせい"],
-        answer: [1],
-        explanation: "「公司職員」的日語是「かいしゃいん」。"
-      },
-      {
-        question: "「森先生是學生嗎？」的日語正確表達是什麼？",
-        options: ["森さんは 学生ですか。","森さんは 会社員ですか。","森さんは 台湾人ですか。","森さんは 日本人ですか。"],
-        answer: [0],
-        explanation: "疑問句形式：「森さんは 学生ですか。」"
-      },
-      {
-        question: "「不是」的日語是什麼？",
-        options: ["はい","いいえ","ちがいます","そうです"],
-        answer: [2],
-        explanation: "「ちがいます」是「不是」的意思。"
-      },
-      {
-        question: "「初次見面」的日語是什麼？",
-        options: ["はじめまして","どうぞ","よろしく","すみません"],
-        answer: [0],
-        explanation: "「初次見面」用「はじめまして」表示。"
-      },
-      {
-        question: "「請多關照」的日語是什麼？",
-        options: ["どうぞよろしくお願いします","はじめまして","すみません","ちがいます"],
-        answer: [0],
-        explanation: "自我介紹後常說「どうぞよろしくお願いします」。"
-      },
-      {
-        question: "「李小姐是JC企劃公司的職員」的日語是？",
-        options: ["李さんは JC企画の 学生です。","李さんは JC企画の 社員です。","李さんは JC企画の 課長です。","李さんは JC企画の 教授です。"],
-        answer: [1],
-        explanation: "「社員」表示隸屬公司的人：「李さんは JC企画の 社員です。」"
-      },
-      {
-        question: "「那個人」的日語是什麼？",
-        options: ["あなた","わたし","あの人","せんせい"],
-        answer: [2],
-        explanation: "「あの人」指遠處的第三人。"
-      },
-      {
-        question: "「金小姐是中國人嗎？」的正確日語是？",
-        options: ["金さんは 日本人ですか。","金さんは 中国人ですか。","金さんは 台湾人ですか。","金さんは 学生ですか。"],
-        answer: [1],
-        explanation: "「中國人嗎？」是「中国人ですか」。"
-      },
-      {
-        question: "「對不起」的日語是什麼？",
-        options: ["すみません","どうぞ","よろしく","ちがいます"],
-        answer: [0],
-        explanation: "常見禮貌語：「すみません」表示抱歉或請問。"
-      },
-      {
-        question: "「我是台灣人」的日語是？",
-        options: ["わたしは 日本人です。","わたしは 台湾人です。","わたしは 学生です。","わたしは 会社員です。"],
-        answer: [1],
-        explanation: "「わたしは 台湾人です。」表示我是台灣人。"
-      },
-      {
-        question: "「森先生不是學生」的日語是？",
-        options: ["森さんは 学生です。","森さんは 学生では ありません。","森さんは 学生では ありませんか。","森さんは 学生ですか。"],
-        answer: [1],
-        explanation: "否定句型為：「学生では ありません」。"
-      }
-    ];
-  </script>
+  <!-- 測驗題目區塊 -->
 </body>
-</html>
